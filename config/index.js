@@ -3,52 +3,25 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
+const proxyConfig = require('./proxyConfig')
 
 module.exports = {
   dev: {
-
-    // Paths
+    env: require('./dev.env'),
+    port: 8080,
+    host:'localhost',
+    autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {  //代理设置(后台联调)
-      // '/api':{
-      //   target:'http://172.22.100.222:8080',
-      //   changeOrigin:true,
-      //   pathRewrite:{
-      //     '^api':'api'
-      //   }
-      // }
-    },
-
-    // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
-    port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    proxyTable: proxyConfig.proxyList,
     autoOpenBrowser: false,
-    errorOverlay: true,
-    notifyOnErrors: true,
-    poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
-
-    // Use Eslint Loader?
-    // If true, your code will be linted during bundling and
-    // linting errors and warnings will be shown in the console.
-    useEslint: true,
-    // If true, eslint errors and warnings will also be shown in the error overlay
-    // in the browser.
-    showEslintErrorsInOverlay: false,
-
-    /**
-     * Source Maps
-     */
-
-    // https://webpack.js.org/configuration/devtool/#development
+    cssSourceMap: false,
     devtool: 'cheap-module-eval-source-map',
-
-    // If you have problems debugging vue-files in devtools,
-    // set this to false - it *may* help
-    // https://vue-loader.vuejs.org/en/options.html#cachebusting
     cacheBusting: true,
-
-    cssSourceMap: true
+    notifyOnErrors: true,
+    poll: false,
+    useEslint: true,
+    errorOverlay: true
   },
 
   build: {
@@ -64,7 +37,7 @@ module.exports = {
      * Source Maps
      */
 
-    productionSourceMap: true,
+    productionSourceMap: false,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
 

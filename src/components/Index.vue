@@ -84,13 +84,54 @@
 </template>
 
 <script>
+import {
+  Cell,
+  CellBox,
+  Flexbox
+} from 'vux';
 export default {
+  components:{
+    Cell,
+    CellBox,
+    Flexbox
+  },
   name: 'HelloWorld',
-  data () {
+  data () { //定义在这个组件当中使用的 变量(类似于react  中的state)
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      bookData:[]
     }
+  },
+  beforeCreate(){ //创建之前
+
+  },
+  created(){ //创建
+    this.$fetch('cats/lv2/statistics').then(res =>{
+      console.log(res,'rres')
+    })
+    this.$fetch('ranking/gender').then(res =>{
+      console.log('res',res)
+    })
+  },
+  beforeMount(){ //挂载之前
+
+  },
+  mounted(){ //挂载完成 (进行数据请求)
+    // this.axios.get(url,parmas:{a:1,b:2})
+  },
+  beforeUpdate(){ //更新之前
+
+  },
+  updated(){ //更新完成
+
+  },
+  beforeDestroy(){ //销毁之前
+
+  },
+  destroyed(){ //销毁完成
+
   }
+
 }
 </script>
 
