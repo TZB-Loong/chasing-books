@@ -13,7 +13,9 @@
       @click.native="showContent = !showContent"></cell>
 
       <template v-if="showContent">
-        <cell-box class="sub-item" is-link v-for='(items,index) in boyOtherBookshelf' :key=index>
+        <cell-box class="sub-item" is-link v-for='(items,index) in boyOtherBookshelf' :key=index
+        :link="{path:'/rang',query:{_id:items._id,monthRank:items.monthRank,totalRank:items.totalRank}}"
+        >
             {{items.title}}
         </cell-box>
       </template>
@@ -31,7 +33,9 @@
       @click.native="showContent1 = !showContent1"></cell>
 
       <template v-if="showContent1">
-        <cell-box class="sub-item" is-link v-for='(items,index) in girlOtherBookshelf' :key=index>
+        <cell-box class="sub-item" is-link v-for='(items,index) in girlOtherBookshelf' :key=index
+        :link="{path:'/rang',query:{_id:items._id,monthRank:items.monthRank,totalRank:items.totalRank}}"
+        >
             {{items.title}}
         </cell-box>
       </template>
