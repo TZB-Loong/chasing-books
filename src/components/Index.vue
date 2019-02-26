@@ -1,99 +1,42 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li>
-        <a
-          href="https://vuejs.org"
-          target="_blank"
-        >
-          Core Docs
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://forum.vuejs.org"
-          target="_blank"
-        >
-          Forum
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://chat.vuejs.org"
-          target="_blank"
-        >
-          Community Chat
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://twitter.com/vuejs"
-          target="_blank"
-        >
-          Twitter
-        </a>
-      </li>
-      <br>
-      <li>
-        <a
-          href="http://vuejs-templates.github.io/webpack/"
-          target="_blank"
-        >
-          Docs for This Template
-        </a>
-      </li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li>
-        <a
-          href="http://router.vuejs.org/"
-          target="_blank"
-        >
-          vue-router
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vuex.vuejs.org/"
-          target="_blank"
-        >
-          vuex
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vue-loader.vuejs.org/"
-          target="_blank"
-        >
-          vue-loader
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-        >
-          awesome-vue
-        </a>
-      </li>
-    </ul>
+  <div class="box">
+      <div class="banner">图片显示</div>
+      <grid :cols="3" :show-lr-borders="false" class="bg-f" :show-vertical-dividers="true">
+      <grid-item >
+        <span class="grid-center">追书架</span>
+      </grid-item>
+      <grid-item>
+        <span class="grid-center">追书社区</span>
+      </grid-item>
+      <grid-item link='/bookshelf'>
+        <span class="grid-center">排行榜</span>
+      </grid-item>
+      <grid-item >
+        <span class="grid-center">主题书单</span>
+      </grid-item>
+      <grid-item >
+        <span class="grid-center">分类</span>
+      </grid-item>
+      <grid-item >
+        <span class="grid-center">听书专区</span>
+      </grid-item>
+      <grid-item >
+        <span class="grid-center">随机看书</span>
+      </grid-item>
+    </grid>
+
   </div>
 </template>
-
 <script>
-import {
-  Cell,
-  CellBox,
-  Flexbox
-} from 'vux';
+import { Tabbar, TabbarItem, Group, Cell ,Grid,GridItem } from 'vux'
 export default {
   components:{
-    Cell,
-    CellBox,
-    Flexbox
+      Tabbar,
+      TabbarItem,
+      Group,
+      Cell,
+      Grid,
+      GridItem,
   },
   name: 'HelloWorld',
   data () { //定义在这个组件当中使用的 变量(类似于react  中的state)
@@ -134,21 +77,22 @@ export default {
 
 }
 </script>
+<style lang="less" scoped>
+.banner{
+  height: 160px;
+}
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
+.grid-center {
+  display: block;
+  text-align: center;
+  color: #666;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+.weui-grids {
+  background-color: #fff;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.flex-links{
+ .weui-cells{
+   background-color: red;
+ }
 }
 </style>
