@@ -24,6 +24,12 @@ export default new Router({
       name:'ranking',
       component:resolve => require(['../components/bookshelf/ranking.vue'],resolve),
       meta:{title:'排行榜详情'}
+    },
+    {
+      path:'/bookDetail',
+      name:'bookDetail',
+      component:resolve => require(['../components/bookshelf/bookDetails.vue'],resolve),
+      meta:{title:'书籍详情'}
     }
   ]
 })

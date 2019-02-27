@@ -6,6 +6,7 @@ import router from './router'
 import {post,fetch,put,patch} from './util/http'
 import Qs from 'qs'
 import { axios } from 'axios';
+import {LoadingPlugin } from 'vux'; //全局注册
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
@@ -22,3 +23,4 @@ Vue.prototype.$patch  = patch;
 Vue.prototype.$put  = put;
 Vue.prototype.$qs = Qs;
 Vue.prototype.$axios = axios;
+Vue.use(LoadingPlugin);

@@ -45,7 +45,7 @@
 </template>
 <script>
 import { Tabbar, TabbarItem, Group, Cell ,Grid,GridItem,CellBox } from 'vux'
-import {imgUrl} from '../../util/util.js';
+import {imgUrl} from '../../util/url.js';
 export default {
   components:{
       Tabbar,

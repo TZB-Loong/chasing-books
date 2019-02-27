@@ -1,7 +1,14 @@
 <template>
-  <div>
+  <div style="padding-top:23px;">
+    <div class="tab-box">
+      <tab>
+      <tab-item selected @on-item-click="onItemClick">周榜</tab-item>
+      <tab-item @on-item-click="onItemClick">月榜</tab-item>
+      <tab-item @on-item-click="onItemClick">总榜</tab-item>
+    </tab>
+    </div>
     <group class="box">
-    <cell v-for="(items,index) in week.books" :key=index is-link>
+    <cell v-for="(items,index) in bookList.books" :key=index is-link :link="{path:'/bookDetail',query:{bookid:items._id}}">
       <img  slot="icon" width="60" :src='imgUrl+items.cover' style="display:block;margin-right:10px;vertical-align:middle"/>
         <span slot="title" style="color:#666;"><span style="vertical-align:middle;">
           <div>
@@ -17,39 +24,72 @@
   </div>
 </template>
 <script>
-import { Tabbar, TabbarItem, Group, Cell ,Grid,GridItem,CellBox } from 'vux';
-import {imgUrl} from '../../util/util.js';
+import {Group, Cell ,Tab, TabItem } from 'vux';
+import {imgUrl} from '../../util/url.js';
+import {isfalse} from '../../util/utli.js';
 export default {
  components:{
    Cell,
-   Group
+   Group,
+   Tab,
+   TabItem,
  },
  name:'ranking',
  data(){
    return {
-     week:[],
-     month:[],
-     total:[],
+     bookList:[],
+     week:{},
+     month:{},
+     total:{},
      imgUrl:''
    }
  },
  created(){
    this.imgUrl=imgUrl
-   this.$fetch('/ranking/'+this.$route.query._id).then(res=>{
-     console.log('res',res);
-     this.week = res.ranking;
-   })
+   this.showLoading();
+   this.requestData(this.$route.query._id,'0');
  },
+ methods:{ //定义函数
+  showLoading(){ //显示loading
+    this.$vux.loading.show({
+        text: 'Loading'
+      })
+  },
+  requestData(rankingId,index){
+    this.showLoading();
+    this.$fetch('/ranking/'+rankingId).then(res =>{
+      console.log(res,'res')
+      this.bookList = res.ranking;
+      index==0?this.week=res.ranking:(index==1?this.month=res.ranking:this.total=res.ranking);
+      this.$vux.loading.hide();
+    })
+  },
+  onItemClick(index){
+    if(index==0){
+      isfalse(this.week)?this.requestData(this.$route.query._id,index):this.bookList=this.week;
+    }else if(index==1){
+      isfalse(this.month)?this.requestData(this.$route.query.monthRank,index):this.bookList=this.month;
+    }else{
+      isfalse(this.total)?this.requestData(this.$route.query.totalRank,index):this.bookList=this.total;
+    }
+  }
+ }
 }
 </script>
 <style lang='less'>
+  .tab-box{
+    position: fixed;
+    width: 100vw;
+    top: 0px;
+    z-index: 99999;
+  }
   .box{
-    margin-top: -20px
+    margin-top: 0px;
+
   }
   .cell-box{
     padding: 10px 15px;
   }
-
   .author{
     font-size: 12px;
   }

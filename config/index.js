@@ -8,7 +8,7 @@ const proxyConfig = require('./proxyConfig')
 module.exports = {
   dev: {
     env: require('./dev.env'),
-    port: 8080,
+    port: 8000,
     host:'localhost',
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
