@@ -64,7 +64,7 @@ export default {
     ...mapActions([ //定义调用action的函数
       // "booksChage", //将this.booksChage() `映射为this.$store.dispatch('booksChage')`
     ]),
-    ...mapMutations([
+    ...mapMutations([ //调用定义的mutations 函数
       "booksChage", //将this.booksChage() `映射为this.$store.commit('booksChage')`
     ])
 
