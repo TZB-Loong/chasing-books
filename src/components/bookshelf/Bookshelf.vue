@@ -46,7 +46,7 @@
 <script>
 import { Tabbar, TabbarItem, Group, Cell ,Grid,GridItem,CellBox } from 'vux'
 import {imgUrl} from '../../util/url.js';
-import {mapState,mapActions,mapMutations} from 'vuex';
+import {mapState,mapActions,mapMutations,mapGetters } from 'vuex';
 export default {
   components:{
       Tabbar,
@@ -58,15 +58,20 @@ export default {
       CellBox,
   },
   computed:{
-    ...mapState ({ //获取state
-        show:state=>state.bookShelf.show //相当于是 this.$store.state.bookShelf.show
-      }),
+    ...mapState({
+      show:state=>state.bookShelf.show //相当于是 this.$store.state.bookShelf.show
+    }),
+    ...mapGetters([
+      'not_show'
+      ])
+  },
+  methods:{
     ...mapActions([ //定义调用action的函数
-      // "booksChage", //将this.booksChage() `映射为this.$store.dispatch('booksChage')`
+      "booksChage", //将this.booksChage() `映射为this.$store.dispatch('booksChage')`
     ]),
-    ...mapMutations([ //调用定义的mutations 函数
-      "booksChage", //将this.booksChage() `映射为this.$store.commit('booksChage')`
-    ])
+    // ...mapMutations([ //调用定义的mutations 函数
+    //   "booksChage", //将this.booksChage() `映射为this.$store.commit('booksChage')`
+    // ])
 
   },
   name: 'Bookshelf',
@@ -86,9 +91,8 @@ export default {
 
   },
   created(){ //创建
-    this.$store.commit('booksChage');
-    // this.booksChage();
-    console.log(this.show,'show'); //应该把处理数据的逻辑放到actions里面去(不需要在页面上进行数据的处理)
+    this.booksChage('zzz'); // this.$store.commit('booksChage');
+    console.log(this.show,'show',this.not_show); //应该把处理数据的逻辑放到actions里面去(不需要在页面上进行数据的处理)
 
     this.imgUrl = imgUrl;
     this.$fetch('ranking/gender').then(res =>{
