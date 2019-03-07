@@ -58,11 +58,11 @@ export default {
       CellBox,
   },
   computed:{
-    ...mapState({
-      show:state=>state.bookShelf.show //相当于是 this.$store.state.bookShelf.show
-    }),
+    // ...mapState({
+    //   boyBooks:state=>state.bookShelf.boyBooks //相当于是 this.$store.state.bookShelf.show
+    // }),
     ...mapGetters([
-      'not_show'
+      'not_show','boyBooks'
       ])
   },
   methods:{
@@ -91,9 +91,9 @@ export default {
 
   },
   created(){ //创建
-    this.booksChage('zzz'); // this.$store.commit('booksChage');
-    console.log(this.show,'show',this.not_show); //应该把处理数据的逻辑放到actions里面去(不需要在页面上进行数据的处理)
 
+    this.booksChage('zzz'); // this.$store.commit('booksChage');
+    console.log(this.boyBooks,'show',this.not_show); //应该把处理数据的逻辑放到actions里面去(不需要在页面上进行数据的处理)
     this.imgUrl = imgUrl;
     this.$fetch('ranking/gender').then(res =>{
       console.log(res,'res')

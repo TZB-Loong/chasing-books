@@ -3,6 +3,5 @@ import { stringify } from 'qs';
 
 
 export async function queryBookshelf(params) {
-  let getData = await ajax('ranking/gender');
-  return getData;
+  return await ajax('ranking/gender');
 }
