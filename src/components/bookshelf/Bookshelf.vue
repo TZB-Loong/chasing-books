@@ -13,7 +13,7 @@
       @click.native="showContent = !showContent"></cell>
 
       <template v-if="showContent">
-        <cell-box class="sub-item" is-link v-for='(items,index) in boyOtherBookshelf' :key=index
+        <cell-box class="sub-item" is-link v-for='items in boyOtherBookshelf' :key="items._id"
         :link="{path:'/rang',query:{_id:items._id,monthRank:items.monthRank,totalRank:items.totalRank}}"
         >
             {{items.title}}
@@ -21,7 +21,7 @@
       </template>
 </group>
 <group title="女生">
-  <cell is-link v-for="(items,index) in girlBookshelf" :key=index :link="{path:'/rang',query:{_id:items._id,monthRank:items.monthRank,totalRank:items.totalRank}}">
+  <cell is-link v-for="(items,index) in girlBookshelf" :key='index' :link="{path:'/rang',query:{_id:items._id,monthRank:items.monthRank,totalRank:items.totalRank}}">
         <img  slot="icon" width="20" :src='imgUrl+items.cover' style="display:block;margin-right:5px;vertical-align:middle"/>
         <span slot="title" style="color:#666;"><span style="vertical-align:middle;">{{items.title}}</span> </span>
   </cell>
@@ -33,7 +33,7 @@
       @click.native="showContent1 = !showContent1"></cell>
 
       <template v-if="showContent1" >
-        <cell-box class="sub-item" is-link v-for='(items,index) in girlOtherBookshelf' :key=index
+        <cell-box class="sub-item" is-link v-for='items in girlOtherBookshelf' :key="items._id"
         :link="{path:'/rang',query:{_id:items._id,monthRank:items.monthRank,totalRank:items.totalRank}}"
         >
             {{items.title}}
@@ -47,6 +47,7 @@
 import { Tabbar, TabbarItem, Group, Cell ,Grid,GridItem,CellBox } from 'vux'
 import {imgUrl} from '../../util/url.js';
 import {mapState,mapActions,mapMutations,mapGetters } from 'vuex';
+import {isfalse} from '../../util/utli.js';
 export default {
   components:{
       Tabbar,
@@ -58,9 +59,9 @@ export default {
       CellBox,
   },
   computed:{
-    // ...mapState({
-    //   boyBooks:state=>state.bookShelf.boyBooks //相当于是 this.$store.state.bookShelf.show
-    // }),
+    ...mapState({
+      books:state=>state.bookShelf.boyBooks //相当于是 this.$store.state.bookShelf.show
+    }),
     ...mapGetters([
       'not_show','boyBooks'
       ])
@@ -92,26 +93,26 @@ export default {
   },
   created(){ //创建
 
-    this.booksChage('zzz'); // this.$store.commit('booksChage');
-    console.log(this.boyBooks,'show',this.not_show); //应该把处理数据的逻辑放到actions里面去(不需要在页面上进行数据的处理)
+    // this.$store.dispatch('booksChage'); //调用接口
     this.imgUrl = imgUrl;
-    this.$fetch('ranking/gender').then(res =>{
-      console.log(res,'res')
-      res.male.map(item=>{
-        if(item.collapse){
-          this.boyOtherBookshelf.push(item)
-        }else{
-          this.boyBookshelf.push(item)
-        }
-      })
-      res.female.map(item=>{
-        if(item.collapse){
+    this.booksChage().then(()=>{
+      if(!isfalse(this.books)){
+        this.books.male.map(item=>{
+            if(item.collapse){
+            this.boyOtherBookshelf.push(item)
+          }else{
+            this.boyBookshelf.push(item)
+          }
+        })
+        this.books.female.map(item=>{
+          if(item.collapse){
           this.girlOtherBookshelf.push(item)
         }else{
            this.girlBookshelf.push(item)
         }
-      })
-    })
+        })
+      }
+    });
   },
 }
 </script>

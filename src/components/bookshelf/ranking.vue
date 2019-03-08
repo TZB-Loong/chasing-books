@@ -27,6 +27,7 @@
 import {Group, Cell ,Tab, TabItem } from 'vux';
 import {imgUrl} from '../../util/url.js';
 import {isfalse} from '../../util/utli.js';
+import {mapState,mapActions,mapMutations} from 'vuex'
 export default {
  components:{
    Cell,
@@ -44,12 +45,20 @@ export default {
      imgUrl:''
    }
  },
+ computed:{
+   ...mapState({
+     list:state=>state.rangking.rankingList
+   })
+ },
  created(){
-   this.imgUrl=imgUrl
+    this.imgUrl=imgUrl
    this.showLoading();
    this.requestData(this.$route.query._id,'0');
  },
  methods:{ //定义函数
+  ...mapActions([
+    'queryranking'
+  ]),
   showLoading(){ //显示loading
     this.$vux.loading.show({
         text: 'Loading'
@@ -57,10 +66,9 @@ export default {
   },
   requestData(rankingId,index){
     this.showLoading();
-    this.$fetch('/ranking/'+rankingId).then(res =>{
-      console.log(res,'res')
-      this.bookList = res.ranking;
-      index==0?this.week=res.ranking:(index==1?this.month=res.ranking:this.total=res.ranking);
+    this.queryranking(rankingId).then(() =>{
+      this.bookList = this.list.ranking;
+      index==0?this.week=this.list.ranking:(index==1?this.month=this.list.ranking:this.total=this.list.ranking);
       this.$vux.loading.hide();
     })
   },

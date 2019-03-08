@@ -1,7 +1,7 @@
 import axios from 'axios'
 import router from '../router';
 import Vue from 'vue';
-
+/*
 axios.defaults.timeout = 5000;
 axios.defaults.baseURL = '/api';
 
@@ -17,13 +17,15 @@ axios.interceptors.response.use( //拦截跳转页面
   error=>{
     return Promise.reject(error.response.data)
   }
-);
+); */
 
 
 export let ajax = axios.create({ //定义一个axios 实例
   baseURL: '/api',
   timeout: 30000,
-  withCredentials: true
+  withCredentials: false,
+  // headers:{},
+  // proxy:{} 代理
 })
 let s = new Vue(); //调用Vue错误模块
 ajax.interceptors.response.use(  //设置axios 实例的错误拦截及跳转
@@ -33,7 +35,6 @@ ajax.interceptors.response.use(  //设置axios 实例的错误拦截及跳转
         path:"/index",
       })
     }
-    console.log(response,'getData')
     return response;
   },error=>{
     s.$Modal.error({
@@ -45,7 +46,7 @@ ajax.interceptors.response.use(  //设置axios 实例的错误拦截及跳转
 
 
 
-export  function fetch(url,params = {}){ //get请求
+/* export  function fetch(url,params = {}){ //get请求
   return new Promise((resolve,reject)=>{
     axios.get(url,{
       params:params
@@ -85,5 +86,5 @@ export function put(url,data ={}) { //put 请求
         reject(err);
       })
     })
-}
+} */
 

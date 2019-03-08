@@ -16,3 +16,24 @@ export function isfalse(param){
   }
   return r;
 }
+export function dateDiff(oldTime){ //计算某一时间与当前时间的时间差
+
+  //获取指定时间的毫秒值，需要把时间格式转成此格式 2018/01/2 15:59:07
+  // let oldTime_fmt = (new Date(fmt)).getTime();
+  let oldTime_fmt  = (new Date(oldTime)).getTime();
+  //获取当前时间的毫秒值
+  let nowTime = Date.now();
+  console.log("当前的时间毫秒值 nowTime == " + nowTime);
+  //计算时间差
+  let diff = (nowTime - oldTime_fmt)/1000/60/60;
+  if(diff<24){
+    return Math.floor(diff) +'小时前'
+  }else{
+    return Math.floor(diff/24) +'天前'
+  }
+}
+
+export function getRandomColor (){ // 生成随机颜色(16进制)
+  return '#'+Math.floor(Math.random()*256).toString(10);
+}
+
