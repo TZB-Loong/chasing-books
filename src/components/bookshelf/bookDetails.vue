@@ -1,7 +1,7 @@
 <template>
   <div v-if="bookDetail">
     <div>
-       <group style="margin-top:-15px;">
+       <group class="group-box">
         <flexbox class="flex-box">
         <flexbox-item :span='2'>
           <div v-if="bookDetail.cover">
@@ -49,6 +49,39 @@
        {{bookDetail.longIntro}}
      </div>
       </group>
+      <group v-if="bookReview.length!=0">
+        <div class="flex-box">
+          <flexbox>
+            <flexbox-item>热门书评</flexbox-item>
+            <flexbox-item style="text-align:right;">更多</flexbox-item>
+          </flexbox>
+        </div>
+        <div v-for='items in bookReview' :key="items._id" class="vux-1px-b text-flex">
+            <div>
+              <div>
+                <flexbox>
+                  <flexbox-item :span='2' class="item-box">
+                    <img :src='imgUrl+items.author.avatar' width="40"/>
+                    </flexbox-item>
+                  <flexbox-item :span='8'>
+                    <div class="text-sm">{{items.author.nickname}}</div>
+                    <div class="text-font"><strong>{{items.title}}</strong></div>
+                  </flexbox-item>
+                  <flexbox-item :span='2' class="time-text">{{diff(items.created)}}</flexbox-item>
+                </flexbox>
+              </div>
+            </div>
+            <div>
+              <flexbox>
+                <flexbox-item :span='2'>&nbsp;</flexbox-item>
+                <flexbox-item :span='10' class="text-content">{{items.content}}</flexbox-item>
+              </flexbox>
+            </div>
+        </div>
+      </group>
+      <group>
+         <cell :title="bookDetail.title" link="#" :inline-desc='bookDetail.postCount'></cell>
+      </group>
     </div>
   </div>
 </template>
@@ -75,22 +108,34 @@ export default {
      bookDetail:null,
      diffTime:'',
      tags:[],
-
+     bookReview:[], //评论列表
    }
  },
  computed:{
    ...mapState({
-     detail:state=>state.detail.detail
+     detail:state=>state.detail.detail,
+     review:state =>state.detail.review
    })
  },
  created(){
+
    this.imgUrl=imgUrl;
    this.showLoading();
-   this.requestData(this.$route.query.bookid);
-   console.log(getRandomColor(),'9090')
+   this.requestData(this.$route.query.bookid); //书籍详情
+   this.queryReview({  //热门评论
+     book:this.$route.query.bookid,
+     sort:'updated',
+     start:'0',
+     limit:'2'
+   }).then(()=>{
+     if(!isfalse(this.review)){
+       this.bookReview = this.review.reviews;
+      //  console.log(this.bookReview,' bookReview')
+     }
+   })
  },
  methods:{ //定义函数
-  ...mapActions(['queryDetail']),
+  ...mapActions(['queryDetail','queryReview']),
   showLoading(){ //显示loading
     this.$vux.loading.show({
         text: 'Loading'
@@ -104,13 +149,16 @@ export default {
         this.diffTime = dateDiff(this.detail.updated);
         this.tags = this.detail.tags
       }
-      console.log(this.bookDetail,'bookDetail')
       this.$vux.loading.hide();
     })
   },
   getcolor(){
     let  color = getRandomColor()
     return color;
+  },
+  diff(oldTime){
+    let diftime = dateDiff(oldTime);
+    return diftime;
   }
  }
 }
@@ -146,13 +194,38 @@ export default {
   .grid-box{
     .weui-grid{
       color:#000;
-      padding: 10px 0px 10px 0px;
+      padding: 10px 0px;
     }
   }
-
+  .group-box{
+    .vux-no-group-title::before{
+      border: none;
+    }
+  }
   .tags-box{
     display: inline-block;
     padding: 5px;
     color:#fff;
+  }
+  .text-font{
+    font-size: 14px;
+  }
+  .text-sm{
+    font-size: 12px;
+    color: burlywood;
+  }
+  .time-text{
+    font-size: 12px;
+    color: #666;
+  }
+  .text-content{
+    font-size: 14px;
+    color: #666;
+    height: 40px;
+    overflow: hidden;
+  }
+  .text-flex{
+    margin-left:15px;
+    padding:10px 15px 10px 0px;
   }
 </style>

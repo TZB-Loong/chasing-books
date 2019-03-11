@@ -23,13 +23,18 @@ export function dateDiff(oldTime){ //计算某一时间与当前时间的时间�
   let oldTime_fmt  = (new Date(oldTime)).getTime();
   //获取当前时间的毫秒值
   let nowTime = Date.now();
-  console.log("当前的时间毫秒值 nowTime == " + nowTime);
+  // console.log("当前的时间毫秒值 nowTime == " + nowTime);
   //计算时间差
   let diff = (nowTime - oldTime_fmt)/1000/60/60;
+
   if(diff<24){
     return Math.floor(diff) +'小时前'
-  }else{
+  }else if(diff<24*30) {
     return Math.floor(diff/24) +'天前'
+  }else if(diff<24*30*12){
+    return Math.floor(diff/(24*30)) +'月前'
+  }else{
+    return Math.floor(diff/(24*30*12))+'年前'
   }
 }
 

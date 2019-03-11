@@ -21,7 +21,7 @@ axios.interceptors.response.use( //拦截跳转页面
 
 
 export let ajax = axios.create({ //定义一个axios 实例
-  baseURL: '/api',
+  // baseURL: '/api',
   timeout: 30000,
   withCredentials: false,
   // headers:{},
