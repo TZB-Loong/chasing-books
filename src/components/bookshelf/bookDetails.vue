@@ -1,10 +1,10 @@
 <template>
-  <div :v-show="isShow">
+  <div v-if="bookDetail">
     <div>
-       <group style="margin-top:-20px;">
+       <group style="margin-top:-15px;">
         <flexbox class="flex-box">
         <flexbox-item :span='2'>
-          <div>
+          <div v-if="bookDetail.cover">
           <img  slot="icon" width="50" :src='imgUrl+bookDetail.cover' alt="图片"/>
           </div>
         </flexbox-item>
@@ -26,8 +26,8 @@
         <flexbox-item class="btn-box"> <x-button>+&nbsp;追更新</x-button></flexbox-item>
         <flexbox-item class="btn-box"> <x-button type="warn">开始阅读</x-button></flexbox-item>
       </flexbox>
-      <grid :show-lr-borders="false" :show-vertical-dividers="false" style="margin-left:15px;">
-        <grid-item class="item-box grid-box">
+      <grid :show-lr-borders="false" :show-vertical-dividers="false" class="grid-box" style="margin-left:15px;">
+        <grid-item class="item-box ">
           <span slot="label" class="number-box">追书人数</span>
            {{bookDetail.latelyFollower}}
         </grid-item>
@@ -40,12 +40,14 @@
             {{bookDetail.serializeWordCount}}
         </grid-item>
       </grid>
-
-     <flexbox class="flex-box">
-       <flexbox-item  v-for="(items,index) in tags" :key='index'>
+     <flexbox class="flex-box" v-if="tags.length!=0">
+       <flexbox-item  v-for="(items,index) in tags" :key='index' >
           <span class="text-box tags-box" v-bind:style="{backgroundColor:getcolor()}">{{items}}</span>
        </flexbox-item>
      </flexbox>
+     <div class="flex-box">
+       {{bookDetail.longIntro}}
+     </div>
       </group>
     </div>
   </div>
@@ -70,10 +72,10 @@ export default {
  name:'ranking',
  data(){
    return {
-     bookDetail:[],
+     bookDetail:null,
      diffTime:'',
-     isShow:false,
-     tags:[]
+     tags:[],
+
    }
  },
  computed:{
@@ -100,7 +102,6 @@ export default {
       if(!isfalse(this.detail)){
         this.bookDetail = this.detail;
         this.diffTime = dateDiff(this.detail.updated);
-        this.show = true;
         this.tags = this.detail.tags
       }
       console.log(this.bookDetail,'bookDetail')
@@ -114,14 +115,13 @@ export default {
  }
 }
 </script>
-<style lang='less'>
+<style lang='less' rel="stylesheet/less" Scoped>
   .flex-box{
-    padding: 15px;
+    padding: 10px 15px;
   }
   .img-box{
     display:block;
     margin-right:5px;
-    vertical-align:middle;
   }
   .item-box{
     text-align: center;
@@ -144,8 +144,12 @@ export default {
     padding: 5px 15px 15px 15px;
   }
   .grid-box{
-    color:#000;
+    .weui-grid{
+      color:#000;
+      padding: 10px 0px 10px 0px;
+    }
   }
+
   .tags-box{
     display: inline-block;
     padding: 5px;

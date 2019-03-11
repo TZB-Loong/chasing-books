@@ -49,12 +49,7 @@ export default {
 
   },
   created(){ //创建
-    this.$fetch('cats/lv2/statistics').then(res =>{
-      console.log(res,'rres')
-    })
-    this.$fetch('ranking/gender').then(res =>{
-      console.log('res',res)
-    })
+
   },
   beforeMount(){ //挂载之前
 
