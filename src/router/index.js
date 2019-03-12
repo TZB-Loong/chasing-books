@@ -30,6 +30,11 @@ export default new Router({
       name:'bookDetail',
       component:resolve => require(['../components/bookshelf/bookDetails.vue'],resolve),
       meta:{title:'书籍详情'}
+    },{
+      path:'/chapter',
+      name:'chapter',
+      component:resolve=> require(['../components/bookshelf/chapterList.vue'],resolve),
+      meta:{title:'章节列表'}
     }
   ]
 })

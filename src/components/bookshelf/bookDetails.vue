@@ -24,7 +24,7 @@
       </flexbox>
       <flexbox>
         <flexbox-item class="btn-box"> <x-button>+&nbsp;追更新</x-button></flexbox-item>
-        <flexbox-item class="btn-box"> <x-button type="warn">开始阅读</x-button></flexbox-item>
+        <flexbox-item class="btn-box"> <x-button type="warn" @click.native="startClick">开始阅读</x-button></flexbox-item>
       </flexbox>
       <grid :show-lr-borders="false" :show-vertical-dividers="false" class="grid-box" style="margin-left:15px;">
         <grid-item class="item-box ">
@@ -40,11 +40,14 @@
             {{bookDetail.serializeWordCount}}
         </grid-item>
       </grid>
-     <flexbox class="flex-box" v-if="tags.length!=0">
-       <flexbox-item  v-for="(items,index) in tags" :key='index' >
-          <span class="text-box tags-box" v-bind:style="{backgroundColor:getcolor()}">{{items}}</span>
-       </flexbox-item>
-     </flexbox>
+     <div class="flex-box" v-if="bookDetail.tags.length!=0">
+       <!-- <flexbox-item > -->
+          <span v-for="(items,index) in bookDetail.tags"
+          :key='index'
+          class="text-box tags-box"
+          v-bind:style="{backgroundColor:getcolor()}">{{items}}</span>
+       <!-- </flexbox-item> -->
+     </div>
      <div class="flex-box">
        {{bookDetail.longIntro}}
      </div>
@@ -74,14 +77,17 @@
             <div>
               <flexbox>
                 <flexbox-item :span='2'>&nbsp;</flexbox-item>
-                <flexbox-item :span='10' class="text-content">{{items.content}}</flexbox-item>
+                <flexbox-item :span='10' class="text-content" v-html='changeStr(items.content)'></flexbox-item>
               </flexbox>
             </div>
         </div>
       </group>
       <group>
-         <cell :title="bookDetail.title" link="#" :inline-desc='bookDetail.postCount'></cell>
+         <cell :title="bookDetail.title" link="#" :inline-desc="'共有'+ bookDetail.postCount+'个帖子'"></cell>
       </group>
+      <!-- <group>
+        <Book_list  v-bind:payload='payload'></Book_list>
+      </group> -->
     </div>
   </div>
 </template>
@@ -89,7 +95,8 @@
 import {Group, Cell ,Tab, TabItem ,Flexbox,FlexboxItem,XButton,GridItem,Grid} from 'vux';
 import {imgUrl} from '../../util/url.js';
 import {isfalse,dateDiff,getRandomColor} from '../../util/utli.js';
-import {mapState,mapActions} from 'vuex'
+import {mapState,mapActions} from 'vuex';
+import Book_list from '../common/book-list';
 export default {
  components:{
    Cell,
@@ -101,14 +108,15 @@ export default {
    XButton,
    Grid,
    GridItem,
+   Book_list
  },
  name:'ranking',
  data(){
    return {
      bookDetail:null,
      diffTime:'',
-     tags:[],
      bookReview:[], //评论列表
+     payload:{}
    }
  },
  computed:{
@@ -130,7 +138,6 @@ export default {
    }).then(()=>{
      if(!isfalse(this.review)){
        this.bookReview = this.review.reviews;
-      //  console.log(this.bookReview,' bookReview')
      }
    })
  },
@@ -147,7 +154,11 @@ export default {
       if(!isfalse(this.detail)){
         this.bookDetail = this.detail;
         this.diffTime = dateDiff(this.detail.updated);
-        this.tags = this.detail.tags
+        this.payload={
+          tag:this.detail.tags,
+          major:this.detail.majorCate,
+          gender:this.detail.gender
+        }
       }
       this.$vux.loading.hide();
     })
@@ -159,6 +170,16 @@ export default {
   diff(oldTime){
     let diftime = dateDiff(oldTime);
     return diftime;
+  },
+  changeStr(str){
+    let changData = str.replace(/\n|\r\n/g,"<br/>");
+    return changData;
+  },
+  startClick(){
+    this.$router.push({
+            name: 'chapter',
+            query: {bookId: this.bookDetail._id}
+          })
   }
  }
 }
@@ -204,11 +225,16 @@ export default {
   }
   .tags-box{
     display: inline-block;
-    padding: 5px;
+    padding: 5px 15px;
     color:#fff;
+    border-radius: 15px;
+    margin-right: 10px;
   }
   .text-font{
     font-size: 14px;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
   }
   .text-sm{
     font-size: 12px;

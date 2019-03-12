@@ -14,7 +14,14 @@ export async function queryDetail(params) { //书籍详情列表
   return await ajax('api/book/'+params);
 }
 
-export async function queryReview(params){
-  // return await ajax('api/post/review/by-book?'+stringify(params))
+export async function queryReview(params){ //书籍详情评论列表
   return await ajax(`api/post/review/by-book?${stringify(params)}`)
+}
+
+export async function querbookList(params){ //按主题获取书单列表
+  return await ajax(`api/book/by-categories?${stringify(params)}`)
+}
+
+export async function querychapterList(params){ //书籍章节列表
+  return await ajax("api/mix-atoc/"+params+"?view=chapters")
 }

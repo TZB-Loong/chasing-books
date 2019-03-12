@@ -39,6 +39,5 @@ export function dateDiff(oldTime){ //计算某一时间与当前时间的时间�
 }
 
 export function getRandomColor (){ // 生成随机颜色(16进制)
-  return '#'+Math.floor(Math.random()*256).toString(10);
+    return '#'+Math.random().toString(16).substr(-6);
 }
-
