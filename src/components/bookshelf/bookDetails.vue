@@ -245,8 +245,6 @@ export default {
   .text-content{
     font-size: 14px;
     color: #666;
-
-
   }
   .text-flex{
     margin-left:15px;
