@@ -11,7 +11,7 @@
       <grid-item link='/bookshelf'>
         <span class="grid-center">排行榜</span>
       </grid-item>
-      <grid-item >
+      <grid-item link='/themList'>
         <span class="grid-center">主题书单</span>
       </grid-item>
       <grid-item >

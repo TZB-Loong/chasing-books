@@ -1,4 +1,5 @@
 export function isfalse(param){
+
   //判断某个对象里面是否为空（数组，对象里面的值{应该将函数排除在外}）
   let r = ['', undefined, null, false].indexOf(param) >= 0;
   if (r === false) {
@@ -40,4 +41,10 @@ export function dateDiff(oldTime){ //计算某一时间与当前时间的时间�
 
 export function getRandomColor (){ // 生成随机颜色(16进制)
     return '#'+Math.random().toString(16).substr(-6);
+}
+
+export function showLoading(context,showtext){  //显示loading(showtext 可定义)
+  context.loading.show({
+    text: isfalse(showtext)?'Loading':showtext
+  })
 }

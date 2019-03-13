@@ -6,6 +6,7 @@ import ranking_store from './modules/ranking_store';
 import booksDetail_store from './modules/booksDetail_store';
 import chapter_store from './modules/chapter_store';
 import common from './modules/common'; //组件module
+import themList_store from './modules/themList_store';
 
 export default new vuex.Store({
   modules:{
@@ -13,6 +14,7 @@ export default new vuex.Store({
     rangking:ranking_store,
     detail:booksDetail_store,
     common,
-    chapter:chapter_store
+    chapter:chapter_store,
+    them:themList_store
   }
 })

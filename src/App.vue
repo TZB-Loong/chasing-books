@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- <img src="./assets/logo.png"> -->
-    <transition name='slide-fade'>
+    <transition name='slide-fade' style='background-color:red;'>
       <router-view/>
     </transition>
   </div>

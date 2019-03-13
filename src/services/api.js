@@ -25,3 +25,11 @@ export async function querbookList(params){ //按主题获取书单列表
 export async function querychapterList(params){ //书籍章节列表
   return await ajax("api/mix-atoc/"+params+"?view=chapters")
 }
+
+export async function querythemList(params){ //主题书单列表
+   return await ajax(`api/book-list?${stringify(params)}`)
+}
+
+export async function querythemDetail(params) {
+  return await ajax('api/book-list/'+params)
+}

@@ -10,7 +10,8 @@
     <group class="box">
     <cell v-for="(items,index) in bookList.books" :key=index is-link :link="{path:'/bookDetail',query:{bookid:items._id}}">
       <img  slot="icon" width="60" :src='imgUrl+items.cover' style="display:block;margin-right:10px;vertical-align:middle"/>
-        <span slot="title" style="color:#666;"><span style="vertical-align:middle;">
+        <span slot="title" style="color:#666;">
+          <span style="vertical-align:middle;">
           <div>
             <div class="title"><h5>{{items.title}}</h5></div>
             <div class="author"> {{items.author}}&nbsp;|&nbsp;{{items.majorCate}}</div>

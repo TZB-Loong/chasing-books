@@ -35,6 +35,16 @@ export default new Router({
       name:'chapter',
       component:resolve=> require(['../components/bookshelf/chapterList.vue'],resolve),
       meta:{title:'章节列表'}
+    },{
+      path:'/themList',
+      name:'themList',
+      component:resolve=>require(['../components/themeSheet/themeList.vue'],resolve),
+      meta:{title:'主题书单'}
+    },{
+      path:'/themDetails',
+      name:'themList',
+      component:resolve =>require(['../components/themeSheet/themeDetails.vue'],resolve),
+      meta:{title:'书单详情'}
     }
   ]
 })

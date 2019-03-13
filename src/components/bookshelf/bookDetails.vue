@@ -10,7 +10,7 @@
         </flexbox-item>
         <flexbox-item :span='8'>
           <div>
-            <div class="title-box">
+            <div class="title-box title-text">
               {{bookDetail.title}}
             </div>
             <div class="text-box">
@@ -40,15 +40,13 @@
             {{bookDetail.serializeWordCount}}
         </grid-item>
       </grid>
-     <div class="flex-box" v-if="bookDetail.tags.length!=0">
-       <!-- <flexbox-item > -->
+     <div class="flex-box tags-text" v-if="bookDetail.tags.length!=0">
           <span v-for="(items,index) in bookDetail.tags"
           :key='index'
           class="text-box tags-box"
           v-bind:style="{backgroundColor:getcolor()}">{{items}}</span>
-       <!-- </flexbox-item> -->
      </div>
-     <div class="flex-box">
+     <div class="flex-box" style="color:#666">
        {{bookDetail.longIntro}}
      </div>
       </group>
@@ -77,7 +75,7 @@
             <div>
               <flexbox>
                 <flexbox-item :span='2'>&nbsp;</flexbox-item>
-                <flexbox-item :span='10' class="text-content" v-html='changeStr(items.content)'></flexbox-item>
+                <flexbox-item :span='10' class="text-content tags-text" v-html='changeStr(items.content)'></flexbox-item>
               </flexbox>
             </div>
         </div>
@@ -247,11 +245,27 @@ export default {
   .text-content{
     font-size: 14px;
     color: #666;
-    height: 40px;
-    overflow: hidden;
+
+
   }
   .text-flex{
     margin-left:15px;
     padding:10px 15px 10px 0px;
+  }
+  .tags-text{
+    overflow: hidden;
+    text-overflow: ellipsis;
+     width: 100%;
+     display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+  }
+  .title-text{
+    overflow: hidden;
+    text-overflow: ellipsis;
+     width: 100%;
+     display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:1;
   }
 </style>
