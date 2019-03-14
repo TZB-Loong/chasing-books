@@ -5,7 +5,7 @@
       <grid-item >
         <span class="grid-center">追书架</span>
       </grid-item>
-      <grid-item>
+      <grid-item link='/communityIndex'>
         <span class="grid-center">追书社区</span>
       </grid-item>
       <grid-item link='/bookshelf'>
@@ -14,7 +14,7 @@
       <grid-item link='/themList'>
         <span class="grid-center">主题书单</span>
       </grid-item>
-      <grid-item >
+      <grid-item link='/categoryList'>
         <span class="grid-center">分类</span>
       </grid-item>
       <grid-item >

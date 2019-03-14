@@ -26,10 +26,22 @@ export async function querychapterList(params){ //书籍章节列表
   return await ajax("api/mix-atoc/"+params+"?view=chapters")
 }
 
+export async function querychaperDetail(params) { //书籍详情
+  return await ajax("chapter/chapter/"+params)
+}
+
 export async function querythemList(params){ //主题书单列表
    return await ajax(`api/book-list?${stringify(params)}`)
 }
 
-export async function querythemDetail(params) {
+export async function querythemDetail(params) { //书单详情列表
   return await ajax('api/book-list/'+params)
+}
+
+export async function querycategoryList(params) { //类别列表
+  return await ajax('api/cats/lv2/statistics')
+}
+
+export async function querycategoryDetail(params) { //按类别获取书单列表
+  return await ajax(`api/book/by-categories?${stringify(params)}`)
 }

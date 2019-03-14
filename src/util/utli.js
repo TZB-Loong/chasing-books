@@ -48,3 +48,13 @@ export function showLoading(context,showtext){  //显示loading(showtext 可定�
     text: isfalse(showtext)?'Loading':showtext
   })
 }
+export function changeStr( str){ //字符串换行处理
+  return str.replace(/\n|\r\n/g,"<br/>")
+}
+
+export function urlChange(url){ //url 特殊字符处理
+  return url.replace(/\%/g,'%25').replace(/\#/g,'%23').replace(/\+/g,'%2B').replace(/\"/g,
+  '%22').replace(/\'/g, '%27').replace(/\//g,
+    '%2F').replace(' ','+').replace(/\?/g,
+      '%3F').replace(/\&/g,'%26').replace(/\=/g,'%3D');
+}
