@@ -1,7 +1,7 @@
 <template>
   <div>
     <group gutter='0'>
-      <cell is-link>
+      <cell is-link link='/comprehensive'>
         <span slot="icon"><img src='../../assets/taolun.png' class="img-box" /></span>
         <span slot="title">综合讨论社区</span>
       </cell>

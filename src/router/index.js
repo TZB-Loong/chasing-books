@@ -68,6 +68,12 @@ export default new Router({
       name:'communityIndex',
       component:resolve =>require(['../components/community/communityIndex.vue'],resolve),
       meta:{title:'追书社区'}
+    },
+    {
+      path:'/comprehensive',
+      name:'comprehensive',
+      component:resolve =>require(['../components/community/comprehensive.vue'],resolve),
+      meta:{title:'综合讨论区'}
     }
   ]
 })

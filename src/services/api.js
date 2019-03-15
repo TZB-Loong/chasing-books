@@ -45,3 +45,7 @@ export async function querycategoryList(params) { //类别列表
 export async function querycategoryDetail(params) { //按类别获取书单列表
   return await ajax(`api/book/by-categories?${stringify(params)}`)
 }
+
+export async function queryComprehensive(params) { //综合讨论区帖子列表
+  return await ajax(`api/post/by-block?${stringify(params)}`)
+}
